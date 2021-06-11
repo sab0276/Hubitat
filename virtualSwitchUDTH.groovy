@@ -1,14 +1,14 @@
-//Can be used to integrate other systems/devices into Hubitat via 3rd party platforms like IFTTT, Alexa, Google Home, etc
+//Can be used to integrate other systems/devices into Hubitat via 3rd party platforms like IFTTT, Alexa, Webhooks, etc
 //Alexa Routines need to use Contact Sensors or Motion Sensors for their Triggers
 //so if you need Alexa integration, make sure you enable the Contact or Motion Sensor functions in the preferences
 
 metadata {
 	definition (name: "Virtual Switch uDTH", namespace: "sab0276", author: "Scott Barton") {
         capability "Sensor"
-        capability "Switch"
-		capability "Contact Sensor"
-        capability "Motion Sensor"
-        capability "Presence Sensor"		//"present", "not present"
+        capability "Switch"		//"on", "off"
+	capability "Contact Sensor"	//"open", "closed"
+        capability "Motion Sensor"	//"active", "inactive"
+        capability "Presence Sensor"	//"present", "not present"
         capability "Smoke Detector"    //"detected", "clear", "tested"
         capability "Water Sensor"      //"dry", "wet"
 	}   
