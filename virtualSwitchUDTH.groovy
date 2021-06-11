@@ -30,7 +30,7 @@ metadata {
         input name: "sleep", type: "bool", title: "Sleep Sensor", defaultValue: false
         input name: "battery", type: "bool", title: "Battery Sensor (0 or 100)", defaultValue: false
         //input name: "valve", type: "bool", title: "Valve", defaultValue: false
-        input name: "autoOff", type: "enum", description: "", title: "Enable auto off", options: [[0:"Disabled"],[1:"1s"],[2:"2s"],[3:"3s"],[4:"4s"],[5:"5s"],[6:"6s"],[7:"7s"],[8:"8s"],[9:"9s"]], defaultValue: 0
+        input name: "autoOff", type: "enum", description: "", title: "Enable auto off", options: [[0:"Disabled"],[1:"1s"],[2:"2s"],[5:"5s"],[10:"10s"],[20:"20s"],[30:"30s"],[60:"1m"],[120:"2m"],[300:"5m"],[1800:"30m"],[3200:"60m"]], defaultValue: 0
     }
 }
 
