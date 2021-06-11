@@ -1,17 +1,23 @@
 //Can be used to integrate other systems/devices into Hubitat via 3rd party platforms like IFTTT, Alexa, Webhooks, etc
 //Alexa Routines need to use Contact Sensors or Motion Sensors for their Triggers
 //so if you need Alexa integration, make sure you enable the Contact or Motion Sensor functions in the preferences
+//To add more capabilities check out https://docs.hubitat.com/index.php?title=Driver_Capability_List.  
+//Note adding some capabilities like Lock or Door Control may limit where it can be used due to security
+
 
 metadata {
-	definition (name: "Virtual Switch uDTH", namespace: "sab0276", author: "Scott Barton") {
+    definition (name: "Virtual Switch uDTH", namespace: "sab0276", author: "Scott Barton") {
         capability "Sensor"
         capability "Switch"		//"on", "off"
-	capability "Contact Sensor"	//"open", "closed"
+        capability "Contact Sensor"	//"open", "closed"
         capability "Motion Sensor"	//"active", "inactive"
         capability "Presence Sensor"	//"present", "not present"
         capability "Smoke Detector"    //"detected", "clear", "tested"
-        capability "Water Sensor"      //"dry", "wet"
-	capability "ShockSensor"	//"clear", "detected"	
+        capability "Water Sensor"      //"wet", "dry"
+        capability "Shock Sensor"	//"detected", "clear"
+        capability "Sleep Sensor"	//"sleeping", "not sleeping"
+        capability "Battery"    //100, 0
+        //capability "Valve"    //"open", "closed"
 	}   
     
     preferences {
@@ -20,7 +26,10 @@ metadata {
         input name: "presence", type: "bool", title: "Presence Sensor", defaultValue: false
         input name: "smoke", type: "bool", title: "Smoke Detector", defaultValue: false
         input name: "water", type: "bool", title: "Water Detector", defaultValue: false
-	input name: "shock", type: "bool", title: "Shock Sensor", defaultValue: false
+        input name: "shock", type: "bool", title: "Shock Sensor", defaultValue: false
+        input name: "sleep", type: "bool", title: "Sleep Sensor", defaultValue: false
+        input name: "battery", type: "bool", title: "Battery Sensor (0 or 100)", defaultValue: false
+        //input name: "valve", type: "bool", title: "Valve", defaultValue: false
         input name: "autoOff", type: "enum", description: "", title: "Enable auto off", options: [[0:"Disabled"],[1:"1s"],[2:"2s"],[3:"3s"],[4:"4s"],[5:"5s"],[6:"6s"],[7:"7s"],[8:"8s"],[9:"9s"]], defaultValue: 0
     }
 }
@@ -33,6 +42,9 @@ def off() {
     if (smoke) sendEvent(name: "smoke", value: "clear")
     if (water) sendEvent(name: "water", value: "dry")
     if (shock) sendEvent(name: "shock", value: "clear")
+    if (sleep) sendEvent(name: "sleeping", value: "not sleeping")
+    if (battery) sendEvent(name: "battery", value: 0)
+    //if (valve) sendEvent(name: "valve", value: "closed")
 }
 
 def on() {
@@ -43,12 +55,22 @@ def on() {
     if (smoke) sendEvent(name: "smoke", value: "detected")
     if (water) sendEvent(name: "water", value: "wet")
     if (shock) sendEvent(name: "shock", value: "detected")
-	
+    if (sleep) sendEvent(name: "sleeping", value: "sleeping")
+    if (battery) sendEvent(name: "battery", value: 100)
+	//if (valve) sendEvent(name: "valve", value: "open")
+    
     if (autoOff.toInteger()>0){
         runIn(autoOff.toInteger(), off)
     }
 }
 
+def close(){
+    off()
+}
+
+def open(){
+    on()
+}
 
 def installed() {
 }
