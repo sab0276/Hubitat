@@ -3,7 +3,7 @@
 //so if you need Alexa integration, make sure you enable the Contact or Motion Sensor functions in the preferences
 //To add more capabilities check out https://docs.hubitat.com/index.php?title=Driver_Capability_List.  
 //Note adding some capabilities like Lock or Door Control may limit where it can be used due to security
-
+//Idea from Mike Maxwell's SmartThings uDTH: https://community.smartthings.com/t/release-universal-virtual-device-type-and-translator/47836
 
 metadata {
     definition (name: "Virtual Switch uDTH", namespace: "sab0276", author: "Scott Barton") {
