@@ -16,6 +16,11 @@
  *  v1.01:  Fixed a bug that could happen if a user updated from an older version of the code, but didn't click "Save Preferences".
  */
 
+/*Scott Barton added the ability to turn it on and off manually (switch capability) as well as auto-turn off (this acts as an auto-update if they are still connected).  
+Use this to control a Virtual Presence Sensor using my Virtual Switch Universal Device Type uDTH and select Presence Sensor in Preferences.
+https://github.com/sab0276/Hubitat/blob/main/virtualSwitchUDTH.groovy
+*/
+
 import groovy.json.*
 	
 metadata {
