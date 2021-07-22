@@ -4,6 +4,7 @@
 //To add more capabilities check out https://docs.hubitat.com/index.php?title=Driver_Capability_List.  
 //Note adding some capabilities like Lock or Door Control may limit where it can be used due to security
 //Idea from Mike Maxwell's SmartThings uDTH: https://community.smartthings.com/t/release-universal-virtual-device-type-and-translator/47836
+//To use VALVE functionality, uncomment the 4 lines with Valve functions (lines 21, 33, 48, 61)
 
 metadata {
     definition (name: "Virtual Switch uDTH", namespace: "sab0276", author: "Scott Barton") {
