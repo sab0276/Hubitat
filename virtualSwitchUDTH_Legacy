@@ -20,7 +20,7 @@ metadata {
         capability "Battery"    //100, 0
         //capability "Valve"    //"open", "closed"
 	}   
-    
+     
     preferences {
         input name: "contact", type: "bool", title: "Contact Sensor", defaultValue: false
         input name: "motion", type: "bool", title: "Motion Sensor", defaultValue: false
