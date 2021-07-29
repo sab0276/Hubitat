@@ -35,6 +35,7 @@ metadata {
         
         capability "Smoke Detector"    //"detected", "clear", "tested"
         capability "Water Sensor"      //"wet", "dry"
+	capability "SoundSensor"	//"detected", "not detected"
         capability "Acceleration Sensor" //"active", "inactive"
         capability "Shock Sensor"	//"detected", "clear"
         capability "Sleep Sensor"	//"sleeping", "not sleeping"
@@ -64,6 +65,7 @@ metadata {
         
         input name: "smoke", type: "bool", title: "Smoke Detector", defaultValue: false
         input name: "water", type: "bool", title: "Water Detector", defaultValue: false
+	input name: "sound", type: "bool", title: "Sound Sensor", defaultValue: false
         input name: "acceleration", type: "bool", title: "Acceleration Sensor", defaultValue: false
         input name: "shock", type: "bool", title: "Shock Sensor", defaultValue: false
         input name: "tamper", type: "bool", title: "Tamper Sensor", defaultValue: false
@@ -91,6 +93,7 @@ def off() {
     if (acceleration) sendEvent(name: "acceleration", value: "inactive", isStateChange: forceUpdate)
     if (smoke) sendEvent(name: "smoke", value: "clear", isStateChange: forceUpdate)
     if (water) sendEvent(name: "water", value: "dry", isStateChange: forceUpdate)
+    if (sound) sendEvent(name: "sound", value: "not detected", isStateChange: forceUpdate)
     if (shock) sendEvent(name: "shock", value: "clear", isStateChange: forceUpdate)
     if (tamper) sendEvent(name: "tamper", value: "clear", isStateChange: forceUpdate)
     if (sleep) sendEvent(name: "sleeping", value: "not sleeping", isStateChange: forceUpdate)
@@ -116,6 +119,7 @@ def on() {
     if (acceleration) sendEvent(name: "acceleration", value: "active", isStateChange: forceUpdate)
     if (smoke) sendEvent(name: "smoke", value: "detected", isStateChange: forceUpdate)
     if (water) sendEvent(name: "water", value: "wet", isStateChange: forceUpdate)
+    if (sound) sendEvent(name: "sound", value: "detected", isStateChange: forceUpdate)
     if (shock) sendEvent(name: "shock", value: "detected", isStateChange: forceUpdate)
     if (tamper) sendEvent(name: "tamper", value: "detected", isStateChange: forceUpdate)
     if (sleep) sendEvent(name: "sleeping", value: "sleeping", isStateChange: forceUpdate)
@@ -195,6 +199,7 @@ def configure(){
     if (device.currentValue("acceleration") != null) device.deleteCurrentState("acceleration")
     if (device.currentValue("smoke") != null) device.deleteCurrentState("smoke")
     if (device.currentValue("water") != null) device.deleteCurrentState("water")
+    if (device.currentValue("sound") != null) device.deleteCurrentState("sound")
     if (device.currentValue("shock") != null) device.deleteCurrentState("shock")
     if (device.currentValue("sleeping") != null) device.deleteCurrentState("sleeping")
     if (device.currentValue("battery") != null) device.deleteCurrentState("battery")
