@@ -1,7 +1,6 @@
 {
   "packageName": "Universal Virtual Switch uDTH - For Alexa, IFTTT, WebHooks, HSM, and other integrations",
   "author": "sab0276",
-  "version": "1.1.4",
   "minimumHEVersion": "2.2.3",
   "dateReleased": "2021-07-29",
   "documentationLink": "https://community.hubitat.com/t/release-virtual-switch-universal-device-type-udth-good-for-alexa-ifttt-hsm-and-other-integrations/74223",
