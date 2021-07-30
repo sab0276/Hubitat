@@ -5,7 +5,6 @@
   "dateReleased": "2021-07-29",
   "documentationLink": "https://community.hubitat.com/t/release-virtual-switch-universal-device-type-udth-good-for-alexa-ifttt-hsm-and-other-integrations/74223",
   "communityLink": "https://community.hubitat.com/t/release-virtual-switch-universal-device-type-udth-good-for-alexa-ifttt-hsm-and-other-integrations/74223",
-  "releaseNotes": "Version [1.1.4] - 2021-07-29 (@sab0276)\n -Added Sound Sensor.",
   "drivers": [
     {
       "id": "36f3b989-607f-457a-a7ad-7fcfd00a07b1",
@@ -13,7 +12,7 @@
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH-Lite.groovy",
       "required": false,
-      "version": "1.1.4"
+      "version": "1.1.2"
     },
     {
       "id": "31e11903-f9c3-45b1-a059-3ef3b03a3614",
@@ -21,7 +20,7 @@
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH.groovy",
       "required": false,
-      "version": "1.1.4"
+      "version": "1.2.3"
     }
   ]
 }
