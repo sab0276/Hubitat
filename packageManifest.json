@@ -8,7 +8,7 @@
   "releaseNotes": "Version [1.1.4] - 2021-07-29 (@sab0276)\n -Added Sound Sensor.",
   "drivers": [
     {
-      "id": "xxxx",
+      "id": "36f3b989-607f-457a-a7ad-7fcfd00a07b1",
       "name": "Universal Virtual Switch Lite - Switch, Contact, Motion, Presence for Alexa and IFTTT",
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH-Lite.groovy",
@@ -16,7 +16,7 @@
       "version": "1.1.4"
     },
     {
-      "id": "xxxxx",
+      "id": "31e11903-f9c3-45b1-a059-3ef3b03a3614",
       "name": "Universal Virtual Switch Super - 20 Capabilities for HSM and all other integrations",
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH.groovy",
