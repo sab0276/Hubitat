@@ -9,13 +9,13 @@
     {
       "id": "36f3b989-607f-457a-a7ad-7fcfd00a07b1",
       "name": "Universal Virtual Switch uDTH Lite - Switch, Contact, Motion, Presence for Alexa and IFTTT",
-      "alternateNames" : [
-				{
-					"name": "Virtual Switch uDTH Lite",
-					"namespace": "sab0276"
-				}
-			],
       "namespace": "sab0276",
+      "alternateNames" : [
+	{
+		"name": "Virtual Switch uDTH Lite",
+		"namespace": "sab0276"
+	}
+       ],
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH-Lite.groovy",
       "required": false,
       "version": "1.1.2"
