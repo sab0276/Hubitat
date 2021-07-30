@@ -1,0 +1,14 @@
+{
+  "author": "sab0276",
+  "gitHubUrl": "https://github.com/sab0276/Hubitat",
+  "packages": [
+    {
+      "id": "55966b40-6613-406b-bf90-500be06b781f",
+      "name": "Universal Virtual Switch uDTH",
+      "category": "Integrations",
+      "tags": ["Alarm Systems", "Buttons", "Cloud", "Lights & Switches", "Locks", "Misc. Devices", "Motion Control", "Presence & Location", "Safety & Security", "Sleep", "Valves", "Water"]
+      "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/packageManifest.json",
+      "description": "Virtual Switch with just about any capability you would need to integrate a device using Alexa, IFTTT, WebHooks, Hubitat Safety Monitor (HSM), and other integrations.  Lite version has Switch, Contact, Motion, and Presence sensor capabilities, perfect for Alexa and IFFTT integrations.  Super version has Switch, Contact, Motion, Presence, Smoke, Water, Sound, Acceleration, Shock, Sleep, Battery, Filter, Tamper, Illuminance, Valve, Lock, Door Control, and Button sensor capabilities.  Has Auto-Off ability to automtically turn the device Off after a certain amount of time.  Has Force Status Update ability to always send an event regardless of the device's current status.  Ie If the device is On, and an app tries to turn it On, it will still Send/Do the On event."
+    }
+  ]
+}
