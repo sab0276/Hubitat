@@ -1,3 +1,4 @@
+//https://github.com/sab0276/Hubitat/blob/main/virtualSwitchUDTH-Lite.groovy
 //Can be used to integrate other systems/devices into Hubitat via 3rd party platforms like IFTTT, Alexa, Webhooks, etc
 //Alexa Routines need to use Contact Sensors or Motion Sensors for their Triggers
 //so if you need Alexa integration, make sure you enable the Contact or Motion Sensor functions in the preferences
