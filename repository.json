@@ -4,7 +4,7 @@
   "packages": [
     {
       "id": "55966b40-6613-406b-bf90-500be06b781f",
-      "name": "Universal Virtual Device Switch uDTH",
+      "name": "Universal Virtual Device Switch uDTH - For Alexa, IFTTT, WebHooks, HSM, and other integrations",
       "category": "Integrations",
       "tags": ["Alarm Systems", "Buttons", "Cloud", "Lights & Switches", "Locks", "Misc. Devices", "Motion Control", "Presence & Location", "Safety & Security", "Sleep", "Valves", "Water"]
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/packageManifest.json",
