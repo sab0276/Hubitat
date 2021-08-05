@@ -31,7 +31,7 @@
         {
 					"name": "Virtual Switch uDTH Super",
 					"namespace": "sab0276"
-				},
+				}
 			],
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH.groovy",
