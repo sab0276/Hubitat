@@ -79,7 +79,8 @@ metadata {
         if (doValves) input name: "valve", type: "bool", title: "Valve", defaultValue: false
         if (doDoorControl) input name: "door", type: "bool", title: "Door Control", defaultValue: false
         if (doLocks) input name: "bLock", type: "bool", title: "Lock", defaultValue: false
-        
+	    
+        input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: false
         input name: "forceUpdate", type: "bool", title: "Force State Update", description: "Send event everytime, regardless of current status. ie Send/Do On even if already On.",  defaultValue: false
         input name: "autoOff", type: "enum", description: "Automatically turns off the device after selected time.", title: "Enable Auto-Off", options: [[0:"Disabled"],[1:"1s"],[2:"2s"],[5:"5s"],[10:"10s"],[20:"20s"],[30:"30s"],[60:"1m"],[120:"2m"],[300:"5m"],[1800:"30m"],[3200:"60m"]], defaultValue: 0
     }
@@ -109,6 +110,7 @@ def off() {
         sendEvent(name: "released", value: state.currButton, isStateChange: true)
         sendEvent(name: "currentButton", value: state.currButton, isStateChange: true)
     }
+    logTxt " turned Off"
 }
 
 def on() {
@@ -141,22 +143,27 @@ def on() {
     if (autoOff.toInteger()>0){
         runIn(autoOff.toInteger(), off)
     }
+    logTxt " turned On"
 }
 
 def close(){
     off()
+    logTxt " Closed"
 }
 
 def open(){
     on()
+    logTxt " Opened"
 }
 
 def unlock(){
     off()
+    logTxt " Unlocked"
 }
 
 def lock(){
     on()
+    logTxt " Locked"
 }
 
 def setNumButtons(btnNum){
@@ -184,6 +191,10 @@ def release(btnNum){
 def installed() {
 }
 
+
+void logTxt(String msg) {
+	if (txtEnable) log.info "${device.displayName} ${msg}"
+}
 
 //Use only if you are on 2.2.8.141 or later.  device.deleteCurrentState() is new to that version and will not work on older versions.  
 def configure(){
@@ -215,4 +226,5 @@ def configure(){
     if (device.currentValue("held") != null) device.deleteCurrentState("held")
     if (device.currentValue("released") != null) device.deleteCurrentState("released")
     if (device.currentValue("currentButton") != null) device.deleteCurrentState("currentButton")   
+    logTxt " configured. State values reset."  
 }
