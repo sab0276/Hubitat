@@ -36,7 +36,7 @@
       "namespace": "sab0276",
       "location": "https://raw.githubusercontent.com/sab0276/Hubitat/main/virtualSwitchUDTH.groovy",
       "required": false,
-      "version": "1.2.3"
+      "version": "1.2.4"
     }
   ]
 }
