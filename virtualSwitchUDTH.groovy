@@ -110,7 +110,7 @@ def off() {
         sendEvent(name: "released", value: state.currButton, isStateChange: true)
         sendEvent(name: "currentButton", value: state.currButton, isStateChange: true)
     }
-    logTxt " turned Off"
+    logTxt "turned Off"
 }
 
 def on() {
@@ -143,27 +143,27 @@ def on() {
     if (autoOff.toInteger()>0){
         runIn(autoOff.toInteger(), off)
     }
-    logTxt " turned On"
+    logTxt "turned On"
 }
 
 def close(){
     off()
-    logTxt " Closed"
+    logTxt "Closed"
 }
 
 def open(){
     on()
-    logTxt " Opened"
+    logTxt "Opened"
 }
 
 def unlock(){
     off()
-    logTxt " Unlocked"
+    logTxt "Unlocked"
 }
 
 def lock(){
     on()
-    logTxt " Locked"
+    logTxt "Locked"
 }
 
 def setNumButtons(btnNum){
@@ -193,7 +193,7 @@ def installed() {
 
 
 void logTxt(String msg) {
-	if (txtEnable) log.info "${device.displayName} ${msg}"
+	if (logEnable) log.info "${device.displayName} ${msg}"
 }
 
 //Use only if you are on 2.2.8.141 or later.  device.deleteCurrentState() is new to that version and will not work on older versions.  
@@ -226,5 +226,5 @@ def configure(){
     if (device.currentValue("held") != null) device.deleteCurrentState("held")
     if (device.currentValue("released") != null) device.deleteCurrentState("released")
     if (device.currentValue("currentButton") != null) device.deleteCurrentState("currentButton")   
-    logTxt " configured. State values reset."  
+    logTxt "configured. State values reset."  
 }
