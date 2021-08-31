@@ -1,4 +1,4 @@
-
+//https://github.com/sab0276/Hubitat/blob/main/ResetDeviceWithConfig.groovy
 //If you need to delete your current states and reset your device, switch to this device driver, hit the configure button, then switch back to your old device driver.  
 
 metadata {
