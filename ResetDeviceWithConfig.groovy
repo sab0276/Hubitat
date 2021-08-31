@@ -1,11 +1,5 @@
-//Can be used to integrate other systems/devices into Hubitat via 3rd party platforms like IFTTT, Alexa, Webhooks, etc
-//Alexa Routines need to use Contact Sensors or Motion Sensors for their Triggers
-//so if you need Alexa integration, make sure you enable the Contact or Motion Sensor functions in the preferences
-//Note adding some capabilities like Lock or Door Control may limit where it can be used due to security
-//Idea from Mike Maxwell's SmartThings uDTH: https://community.smartthings.com/t/release-universal-virtual-device-type-and-translator/47836
-//If you need more than just SWITCH, CONTACT, MOTION, and/or PRESENCE, use my Virtual Switch uDTH Super device driver for that device instead.    
 
-//Force State Update preference will send an event everytime you manually push a form button or app tries to do something with the device.  Ie.  If the device is already On, and an app tries to turn it On, it will send a On/Open/Motion/Present event. 
+//If you need to delete your current states and reset your device, switch to this device driver, hit the configure button, then switch back to your old device driver.  
 
 metadata {
     definition (name: "Reset Device with Config", namespace: "sab0276", author: "Scott Barton") {
