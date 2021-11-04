@@ -11,10 +11,10 @@
 //ADJUST CAPABILITIES HERE.  You can install multiple versions of this code as long as the values below are different. The Device Type Name will automatically be updated. ie One Device Type that just has On/Off, One Device Type for a virtual switch with Locks, or Buttons functionality, etc.  
 //Use the least amount of capabilities needed for your device/integration.  Will be more effecient, and less prone to restrictions.  
 //If you only need, SWITCH, CONTACT, MOTION, and/or PRESENCE, use my Virtual Switch uDTH Lite device driver for that device instead.  Much more effecient and less restrictions.  
-def doValves = false //Set to true to allow Valve functionality.  
+def doValves = true //Set to true to allow Valve functionality.  
 def doButtons = false //Set to true to allow Button functionality.
 def doLocks = false //Set to true to allow Lock functionality.  This may impact your ability to use this device driver for certain integrations due to security.  
-def doDoorControl = false //Set to true to allow Door Control functionality.  This may impact your ability to use this device driver for certain integrations due to security.
+def doDoorControl = true //Set to true to allow Garage/Door Control functionality.  This may impact your ability to use this device driver for certain integrations due to security.
 
 
 def DTName = "Virtual Switch uDTH Super"
@@ -36,7 +36,7 @@ metadata {
         
         capability "Smoke Detector"    //"detected", "clear", "tested"
         capability "Water Sensor"      //"wet", "dry"
-	capability "SoundSensor"	//"detected", "not detected"
+	    capability "SoundSensor"	//"detected", "not detected"
         capability "Acceleration Sensor" //"active", "inactive"
         capability "Shock Sensor"	//"detected", "clear"
         capability "Sleep Sensor"	//"sleeping", "not sleeping"
@@ -45,9 +45,12 @@ metadata {
         capability "TamperAlert" //"detected", "clear"
         capability "IlluminanceMeasurement" //1000, 0
           
-        if (doValves) capability "Valve"    //"open", "closed"
+        if (doValves) capability "Valve"   //"open", "closing", "closed", "opening"
         if (doLocks) capability "Lock" // "locked", "locked"
-        if (doDoorControl) capability "DoorControl"  //"open", "closed"
+        if (doDoorControl){
+        	capability "DoorControl"  //"open", "closing", "closed", "opening"
+        	capability "GarageDoorControl" //"open", "closing", "closed", "opening"
+        }
         if (doButtons){
             capability "PushableButton"
             capability "ReleasableButton"
@@ -66,7 +69,7 @@ metadata {
         
         input name: "smoke", type: "bool", title: "Smoke Detector", defaultValue: false
         input name: "water", type: "bool", title: "Water Detector", defaultValue: false
-	input name: "sound", type: "bool", title: "Sound Sensor", defaultValue: false
+		input name: "sound", type: "bool", title: "Sound Sensor", defaultValue: false
         input name: "acceleration", type: "bool", title: "Acceleration Sensor", defaultValue: false
         input name: "shock", type: "bool", title: "Shock Sensor", defaultValue: false
         input name: "tamper", type: "bool", title: "Tamper Sensor", defaultValue: false
@@ -77,7 +80,8 @@ metadata {
             
         if(doButtons) input name: "button", type: "bool", title: "Button", defaultValue: false
         if (doValves) input name: "valve", type: "bool", title: "Valve", defaultValue: false
-        if (doDoorControl) input name: "door", type: "bool", title: "Door Control", defaultValue: false
+        if (doDoorControl) input name: "door", type: "bool", title: "Garage or Door Control", defaultValue: false
+        if (doDoorControl || doValves) input name: "openingTime", type: "enum", description: "How long it takes for door/valve to open or close.", title: "Opening Time", options: [[0:"0s"],[1:"1s"],[2:"2s"],[3:"3s"],[4:"4s"],[5:"5s"],[6:"6s"],[7:"7s"],[8:"8s"],[9:"9s"],[10:"10s"],[11:"11s"],[12:"12s"],[13:"13s"],[14:"14s"],[15:"15s"],[20:"20s"],[30:"30s"]], defaultValue: 0
         if (doLocks) input name: "bLock", type: "bool", title: "Lock", defaultValue: false
 	    
         input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: false
@@ -88,7 +92,7 @@ metadata {
 
 def off() {
     sendEvent(name: "switch", value: "off", isStateChange: forceUpdate)
-    if (contact) sendEvent(name: "contact", value: "closed", isStateChange: forceUpdate)
+    if (contact && !door && !valve) sendEvent(name: "contact", value: "closed", isStateChange: forceUpdate)
     if (motion) sendEvent(name: "motion", value: "inactive", isStateChange: forceUpdate)
     if (presence) sendEvent(name: "presence", value: "not present", isStateChange: forceUpdate)
 
@@ -103,9 +107,15 @@ def off() {
     if (illuminance) sendEvent(name: "illuminance", value: 0, isStateChange: forceUpdate)
     if (filter) sendEvent(name: "filterStatus", value: "normal", isStateChange: forceUpdate)
     
-    if (valve) sendEvent(name: "valve", value: "closed", isStateChange: forceUpdate)
-    if (door) sendEvent(name: "door", value: "closed", isStateChange: forceUpdate)
-    if (bLock) sendEvent(name: "lock", value: "unlocked", isStateChange: forceUpdate)
+    if (valve && (device.currentValue('valve') != "closing" && device.currentValue('valve') != "closed")) {
+        sendEvent(name: "valve", value: "closing", isStateChange: forceUpdate)
+        runIn(openingTime.toInteger(), closed)
+    }
+    if (door && (device.currentValue('door') != "closing" && device.currentValue('door') != "closed")) {
+    	sendEvent(name: "door", value: "closing", isStateChange: forceUpdate)
+    	runIn(openingTime.toInteger(), closed)
+    }
+	if (bLock) sendEvent(name: "lock", value: "unlocked", isStateChange: forceUpdate)
     if (button){
         sendEvent(name: "released", value: state.currButton, isStateChange: true)
         sendEvent(name: "currentButton", value: state.currButton, isStateChange: true)
@@ -130,8 +140,14 @@ def on() {
     if (illuminance) sendEvent(name: "illuminance", value: 1000, isStateChange: forceUpdate)
     if (filter) sendEvent(name: "filterStatus", value: "replace", isStateChange: forceUpdate)
 	
-    if (valve) sendEvent(name: "valve", value: "open", isStateChange: forceUpdate)
-    if (door) sendEvent(name: "door", value: "open", isStateChange: forceUpdate)
+    if (valve && (device.currentValue('valve') != "opening" && device.currentValue('valve') != "open")) {
+        sendEvent(name: "valve", value: "opening", isStateChange: forceUpdate)
+        runIn(openingTime.toInteger(), opened)
+    }
+    if (door && (device.currentValue('door') != "opening" && device.currentValue('door') != "open")) {
+    	sendEvent(name: "door", value: "opening", isStateChange: forceUpdate)
+    	runIn(openingTime.toInteger(), opened)
+    }
     if (bLock) sendEvent(name: "lock", value: "locked", isStateChange: forceUpdate)
     if (button){
         if (state.currButton == null) state.currButton = 1 
@@ -145,6 +161,19 @@ def on() {
     }
     logTxt "turned On"
 }
+
+def closed(){
+	if (device.currentValue('door') == "closing") sendEvent(name: "door", value: "closed", isStateChange: forceUpdate)
+    if (device.currentValue('valve') == "closing") sendEvent(name: "valve", value: "closed", isStateChange: forceUpdate)
+    if (device.currentValue('contact') == "open" && device.currentValue('door') != "opening" && device.currentValue('valve') != "opening")  sendEvent(name: "contact", value: "closed", isStateChange: forceUpdate)
+}
+
+def opened(){
+	if (device.currentValue('door') == "opening") sendEvent(name: "door", value: "open", isStateChange: forceUpdate)
+    if (device.currentValue('valve') == "opening") sendEvent(name: "valve", value: "open", isStateChange: forceUpdate)
+    if (device.currentValue('contact') == "closed") sendEvent(name: "contact", value: "open", isStateChange: forceUpdate)
+}
+
 
 def close(){
     off()
