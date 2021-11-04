@@ -11,6 +11,7 @@
 //ADJUST CAPABILITIES HERE.  You can install multiple versions of this code as long as the values below are different. The Device Type Name will automatically be updated. ie One Device Type that just has On/Off, One Device Type for a virtual switch with Locks, or Buttons functionality, etc.  
 //Use the least amount of capabilities needed for your device/integration.  Will be more effecient, and less prone to restrictions.  
 //If you only need, SWITCH, CONTACT, MOTION, and/or PRESENCE, use my Virtual Switch uDTH Lite device driver for that device instead.  Much more effecient and less restrictions.  
+//If you disable any of these after having them enabled, please disable the associated capability in the Preferences of every device using this driver BEFORE disabling here. You can then hit Configure on each device to remove the old statuses.  
 def doValves = false //Set to true to allow Valve functionality.  
 def doButtons = false //Set to true to allow Button functionality.
 def doLocks = false //Set to true to allow Lock functionality.  This may impact your ability to use this device driver for certain integrations due to security.  
