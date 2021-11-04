@@ -11,10 +11,10 @@
 //ADJUST CAPABILITIES HERE.  You can install multiple versions of this code as long as the values below are different. The Device Type Name will automatically be updated. ie One Device Type that just has On/Off, One Device Type for a virtual switch with Locks, or Buttons functionality, etc.  
 //Use the least amount of capabilities needed for your device/integration.  Will be more effecient, and less prone to restrictions.  
 //If you only need, SWITCH, CONTACT, MOTION, and/or PRESENCE, use my Virtual Switch uDTH Lite device driver for that device instead.  Much more effecient and less restrictions.  
-def doValves = false //Set to true to allow Valve functionality.  
+def doValves = true //Set to true to allow Valve functionality.  
 def doButtons = false //Set to true to allow Button functionality.
 def doLocks = false //Set to true to allow Lock functionality.  This may impact your ability to use this device driver for certain integrations due to security.  
-def doDoorControl = false //Set to true to allow Garage/Door Control functionality.  This may impact your ability to use this device driver for certain integrations due to security.
+def doDoorControl = true //Set to true to allow Garage/Door Control functionality.  This may impact your ability to use this device driver for certain integrations due to security.
 
 
 def DTName = "Virtual Switch uDTH Super"
@@ -45,7 +45,7 @@ metadata {
         capability "TamperAlert" //"detected", "clear"
         capability "IlluminanceMeasurement" //1000, 0
           
-        if (doValves) capability "Valve"   //"open", "closing", "closed", "opening"
+        if (doValves) capability "Valve"    //"open", "closed"
         if (doLocks) capability "Lock" // "locked", "locked"
         if (doDoorControl){
         	capability "DoorControl"  //"open", "closing", "closed", "opening"
@@ -107,11 +107,11 @@ def off() {
     if (illuminance) sendEvent(name: "illuminance", value: 0, isStateChange: forceUpdate)
     if (filter) sendEvent(name: "filterStatus", value: "normal", isStateChange: forceUpdate)
     
-    if (valve && (device.currentValue('valve') != "closing" && device.currentValue('valve') != "closed")) {
+    if (valve && ((device.currentValue('valve') != "closing" && device.currentValue('valve') != "closed") || forceUpdate)) {
         sendEvent(name: "valve", value: "closing", isStateChange: forceUpdate)
         runIn(openingTime.toInteger(), closed)
     }
-    if (door && (device.currentValue('door') != "closing" && device.currentValue('door') != "closed")) {
+    if (door && ((device.currentValue('door') != "closing" && device.currentValue('door') != "closed") || forceUpdate)) {
     	sendEvent(name: "door", value: "closing", isStateChange: forceUpdate)
     	runIn(openingTime.toInteger(), closed)
     }
@@ -140,11 +140,11 @@ def on() {
     if (illuminance) sendEvent(name: "illuminance", value: 1000, isStateChange: forceUpdate)
     if (filter) sendEvent(name: "filterStatus", value: "replace", isStateChange: forceUpdate)
 	
-    if (valve && (device.currentValue('valve') != "opening" && device.currentValue('valve') != "open")) {
+    if (valve && ((device.currentValue('valve') != "opening" && device.currentValue('valve') != "open") || forceUpdate)) {
         sendEvent(name: "valve", value: "opening", isStateChange: forceUpdate)
         runIn(openingTime.toInteger(), opened)
     }
-    if (door && (device.currentValue('door') != "opening" && device.currentValue('door') != "open")) {
+    if (door && ((device.currentValue('door') != "opening" && device.currentValue('door') != "open") || forceUpdate)) {
     	sendEvent(name: "door", value: "opening", isStateChange: forceUpdate)
     	runIn(openingTime.toInteger(), opened)
     }
